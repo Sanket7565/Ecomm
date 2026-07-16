@@ -18,10 +18,8 @@ public class UserController
 {
     @Autowired
     UserService service;
-
     @Autowired
     User user;
-
     @Autowired
     FetchUserRequest wrapper;
 
@@ -44,10 +42,7 @@ public class UserController
     }
 
     @PatchMapping("updateUser/{id}")
-    public ResponseEntity <String> updateUser(@PathVariable Long id,@RequestBody UserUpdateRequest user)
-    {
-        return service.updateUser(id,user);
-    }
+    public ResponseEntity <String> updateUser(@PathVariable Long id,@RequestBody UserUpdateRequest user) {return service.updateUser(id,user);}
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity <String> deleteUserById(@PathVariable Long id)
