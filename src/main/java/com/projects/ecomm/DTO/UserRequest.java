@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 @Component
 @Data
-public class UserUpdateRequest
+public class UserRequest
 {
 
         private String fName;

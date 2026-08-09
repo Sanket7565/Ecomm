@@ -1,14 +1,13 @@
 package com.projects.ecomm.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Entity
 @Component
@@ -22,6 +21,12 @@ public class User
     private String lName;
     private String email;
     private String password;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole=UserRole.USER;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    private List<Address> addresses;
 
 }

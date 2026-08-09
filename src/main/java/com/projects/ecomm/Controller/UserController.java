@@ -1,7 +1,7 @@
 package com.projects.ecomm.Controller;
 
-import com.projects.ecomm.DTO.FetchUserRequest;
-import com.projects.ecomm.DTO.UserUpdateRequest;
+import com.projects.ecomm.DTO.UserResponse;
+import com.projects.ecomm.DTO.UserRequest;
 import com.projects.ecomm.Model.User;
 import com.projects.ecomm.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserController
     @Autowired
     User user;
     @Autowired
-    FetchUserRequest wrapper;
+    UserResponse wrapper;
 
     @PostMapping("/addUser")
     public ResponseEntity <String> addUser(@RequestBody User user)
@@ -30,23 +30,25 @@ public class UserController
     }
 
     @GetMapping("/getAllUsers")
-    public ResponseEntity<List<FetchUserRequest>>getAllUsers()
+    public ResponseEntity<List<UserResponse>>getAllUsers()
     {
         return service.getAllUsers();
     }
 
     @GetMapping("/getUserById/{id}")
-    public ResponseEntity<FetchUserRequest> getUserById(@PathVariable Long id)
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id)
     {
         return service.getUserById(id);
     }
 
     @PatchMapping("updateUser/{id}")
-    public ResponseEntity <String> updateUser(@PathVariable Long id,@RequestBody UserUpdateRequest user) {return service.updateUser(id,user);}
+    public ResponseEntity <String> updateUser(@PathVariable Long id,@RequestBody UserRequest user) {return service.updateUser(id,user);}
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity <String> deleteUserById(@PathVariable Long id)
     {
         return service.deleteUser(id);
     }
+
+
 }
