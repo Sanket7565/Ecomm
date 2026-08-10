@@ -1,5 +1,6 @@
 package com.projects.ecomm.IMPL;
 
+import com.projects.ecomm.CustomExceptions.ProductNotFoundException;
 import com.projects.ecomm.DTO.ProductRequest;
 import com.projects.ecomm.DTO.ProductResponse;
 import com.projects.ecomm.Model.Product;
@@ -57,7 +58,7 @@ public class ProductServiceIMPL implements ProductService
             return new ResponseEntity<>(productResponse, HttpStatus.OK);
         }
         // return a typed empty 404 response to avoid ambiguous null generic inference
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+       throw new ProductNotFoundException("Product with ID " + id + " not found");
 
     }
 
@@ -71,8 +72,9 @@ public class ProductServiceIMPL implements ProductService
         product.setPrice(productRequest.getPrice());
         product.setCategory(productRequest.getCategory());
         product.setStatus(ProductStatus.ACTIVE);
+        product.setStockQuantity(productRequest.getStockQuantity());
         repo.save(product);
-        return new ResponseEntity<>("Product with ID" +product.getId()+"Added Successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("Product with ID " +product.getId()+"Added Successfully", HttpStatus.CREATED);
     }
 
 
@@ -84,6 +86,6 @@ public class ProductServiceIMPL implements ProductService
             repo.deleteById(Math.toIntExact(id));
             return new ResponseEntity<>("Product with ID " + id + " deleted successfully", HttpStatus.GONE);
         }
-        return new ResponseEntity<>("Product Not Found", HttpStatus.NOT_FOUND);
+        throw new ProductNotFoundException("Product with ID " + id + " not found");
     }
 }

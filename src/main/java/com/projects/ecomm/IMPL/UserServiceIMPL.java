@@ -1,8 +1,10 @@
 package com.projects.ecomm.IMPL;
 
+import com.projects.ecomm.CustomExceptions.UserNotFoundException;
 import com.projects.ecomm.DTO.UserResponse;
 import com.projects.ecomm.DTO.UserRequest;
 import com.projects.ecomm.Model.User;
+import com.projects.ecomm.Model.UserRole;
 import com.projects.ecomm.Repository.UserRepo;
 import com.projects.ecomm.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class UserServiceIMPL implements UserService {
     }
 
     public ResponseEntity<String> addUser(User user) {
-        //user.setRole("USER");
+        user.setUserRole(UserRole.USER);
         repo.save(user);
         return new ResponseEntity<>("User Created Successfully", HttpStatus.CREATED);
     }
@@ -44,7 +46,8 @@ public class UserServiceIMPL implements UserService {
     public ResponseEntity<UserResponse> getUserById(Long id) {
         Optional<User> opt = repo.findById(id);
         if (opt.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new UserNotFoundException("User with ID " + id + " not found");
+            //return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         User u = opt.get();
@@ -59,7 +62,7 @@ public class UserServiceIMPL implements UserService {
     public ResponseEntity<String> updateUser(Long id, UserRequest req) {
         Optional<User> opt = repo.findById(id);
         if (opt.isEmpty()) {
-            return new ResponseEntity<>("User Not Found", HttpStatus.NOT_FOUND);
+            throw new UserNotFoundException("User with ID " + id + " not found");
         }
 
         User user = opt.get();
