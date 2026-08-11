@@ -15,4 +15,6 @@ public interface CartService {
     ResponseEntity<String> deleteItemFromCart(Long userId, Long productId);
 
     ResponseEntity<List<CartItemResponse>> getAllItemsInCart(Long userId);
+
+    ResponseEntity<String> clearCart(Long userId);
 }

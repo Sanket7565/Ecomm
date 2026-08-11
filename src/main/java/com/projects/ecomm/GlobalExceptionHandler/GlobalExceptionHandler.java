@@ -1,6 +1,7 @@
 package com.projects.ecomm.GlobalExceptionHandler;
 
 import com.projects.ecomm.CustomExceptions.CartIsEmptyException;
+import com.projects.ecomm.CustomExceptions.OrderNotFoundException;
 import com.projects.ecomm.CustomExceptions.ProductNotFoundException;
 import com.projects.ecomm.CustomExceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -34,4 +35,14 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(exception.getMessage());
     }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    public ResponseEntity<String> handleOrderNotFoundException(OrderNotFoundException exception)
+    {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
+    }
+
+
 }

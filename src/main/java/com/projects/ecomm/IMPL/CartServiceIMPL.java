@@ -11,6 +11,7 @@ import com.projects.ecomm.Repository.CartRepo;
 import com.projects.ecomm.Repository.ProductRepo;
 import com.projects.ecomm.Repository.UserRepo;
 import com.projects.ecomm.Service.CartService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -134,5 +135,20 @@ public class CartServiceIMPL implements CartService
             cartItemResponses.add(response);
         }
         return new ResponseEntity<>(cartItemResponses, HttpStatus.OK);
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<String> clearCart(Long userId)
+    {
+        if(!uRepo.existsById(userId))
+        {
+            throw new UserNotFoundException("User not found with id: " + userId);
+        }
+
+        User user = uRepo.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+        cRepo.deleteByUser(user);
+
+        return new ResponseEntity<>("Cart cleared successfully", HttpStatus.OK);
     }
 }

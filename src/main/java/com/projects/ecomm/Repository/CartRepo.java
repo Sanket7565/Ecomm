@@ -20,4 +20,6 @@ public interface CartRepo extends JpaRepository<CartItem, Integer> {
     CartItem findByUserAndProduct(Optional<User> byId, Optional<Product> byId1);
 
     List<CartItem> findByUser(User user);
+
+    void deleteByUser(User user);
 }

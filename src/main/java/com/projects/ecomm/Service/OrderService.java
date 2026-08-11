@@ -9,4 +9,6 @@ public interface OrderService
 {
 
     ResponseEntity<OrderResponse> createOrder(Long userId);
+
+    ResponseEntity<String> cancelOrder(Long userId, Long orderId);
 }
